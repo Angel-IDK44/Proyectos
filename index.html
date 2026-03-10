@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aprende y Emprende</title>
+  <link rel="shortcut icon" href="IN.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilo.css">
+  
+</head>
+
+<!-- Modal Login -->
+<div id="modalLogin" class="modal">
+  <div class="window">
+    <h3>Iniciar sesión</h3>
+    <input id="loginNombre" placeholder="Tu nombre" style="padding:10px;border-radius:8px;border:1px solid #e6eefc;width:100%;margin-top:10px">
+    <div style="text-align:right;margin-top:12px">
+      <button class="btn btn-primary" onclick="iniciarSesion()">Entrar</button>
+      <button class="btn" onclick="closeModal('modalLogin')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<body>
+
+  <!-- ===== OVERLAY SETTINGS ===== -->
+  <div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+
+  <!-- ===== PANEL DE CONFIGURACIÓN ===== -->
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+      <h3>⚙️ Configuración</h3>
+      <button class="close-settings" onclick="closeSettings()">✕</button>
+    </div>
+
+    <!-- Apariencia -->
+    <div class="settings-section">
+      <div class="settings-section-title">Apariencia</div>
+      <div class="toggle-row">
+        <span class="toggle-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Modo oscuro
+        </span>
+        <label class="toggle">
+          <input type="checkbox" id="darkToggle" onchange="toggleDark(this)">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Progreso -->
+    <div class="settings-section">
+      <div class="settings-section-title">Mi progreso</div>
+      <div class="prog-bar-track">
+        <div class="prog-bar-fill" id="settingsProgBar" style="width:0%"></div>
+      </div>
+      <div class="prog-label">
+        <span id="settingsProgText">0 de 3 cursos</span>
+        <span id="settingsProgPorc">0%</span>
+      </div>
+
+      <div class="prog-course-item">
+        <div class="prog-badge pending" id="badge0">1</div>
+        <span>Ventas para principiantes</span>
+      </div>
+      <div class="prog-course-item">
+        <div class="prog-badge pending" id="badge1">2</div>
+        <span>Marketing digital básico</span>
+      </div>
+      <div class="prog-course-item">
+        <div class="prog-badge pending" id="badge2">3</div>
+        <span>Gestión de costos</span>
+      </div>
+
+      <div style="margin-top:12px">
+        <button class="btn btn-primary" style="width:100%;padding:10px;border-radius:10px;font-size:13px" onclick="simularAvance()">
+          + Completar curso (demo)
+        </button>
+      </div>
+    </div>
+
+    <!-- Cuenta -->
+    <div class="settings-section">
+      <div class="settings-section-title">Cuenta</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">
+        Sesión activa como <strong id="panelNombreUsuario" style="color:var(--text)">—</strong>
+      </div>
+      <button class="btn-logout" onclick="cerrarSesion()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">AE</div>
+        <div>
+          <div style="font-weight:800">Aprende y Emprende</div>
+          <div style="font-size:12px;color:var(--muted)">Capacitación práctica para jóvenes</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#cursos">Cursos</a>
+        <a href="#simulador">Simulador</a>
+        <a href="#finanzas">Mis finanzas</a>
+        <span id="navAuth"></span>
+      </nav>
+      <!-- Avatar + botón de config -->
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="user-chip" onclick="openSettings()">
+          <div class="user-avatar" id="headerAvatar">?</div>
+          <span id="nombreUsuario">Usuario</span>
+        </div>
+        <button class="settings-btn" onclick="openSettings()" title="Configuración">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-card">
+          <h1>Aprende habilidades prácticas para crear tu propio negocio</h1>
+          <p class="lead">Cursos cortos, simulador de negocio y herramientas para llevar tus finanzas. Pensado para jóvenes que quieren empezar hoy mismo.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="cursos.html">Ver Cursos</a>
+            <button class="btn btn-outline" onclick="openModal('modalSim')">Probar Simulador</button>
+          </div>
+
+          <div class="grid" style="margin-top:18px">
+            <div class="card">
+              <div style="font-size:12px;color:var(--accent)">Cursos</div>
+              <h3>Lecciones cortas y prácticas</h3>
+              <div class="meta">Videos + pruebas rápidas</div>
+            </div>
+            <div class="card">
+              <div style="font-size:12px;color:var(--accent)">Simulador</div>
+              <h3>Administra un negocio virtual</h3>
+              <div class="meta">Aprende sin riesgo</div>
+            </div>
+            <div class="card">
+              <div style="font-size:12px;color:var(--accent)">Comunidad</div>
+              <h3>Comparte y vende localmente</h3>
+              <div class="meta">Foros y promociones</div>
+            </div>
+          </div>
+        </div>
+
+        <aside style="padding:0 6px">
+          <div class="card" style="text-align:center">
+            <h3>Progreso</h3>
+            <div id="progresoValor" style="font-size:28px;font-weight:800;color:var(--accent)">0%</div>
+            <div class="small">Completa tu primer curso para desbloquear el simulador</div>
+            <div style="margin-top:12px">
+              <button class="btn btn-primary" onclick="window.location.href='cursos.html'">Comenzar ahora</button>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <h3>Noticias rápidas</h3>
+            <div class="small">Convocatoria: Feria de Emprendimiento local — 12 de Diciembre</div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="cursos" class="courses">
+        <div>
+          <h2 style="margin:6px 0">Cursos destacados</h2>
+          <div class="course-list">
+            <div class="course">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=200&q=60" alt="curso">
+              <div class="info">
+                <div style="font-weight:700">Ventas para principiantes</div>
+                <div class="small">4 lecciones • 25 min</div>
+              </div>
+              <button class="btn" onclick="window.location.href='cursos.html'">Ver</button>
+            </div>
+
+            <div class="course">
+              <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=200&q=60" alt="curso">
+              <div class="info">
+                <div style="font-weight:700">Marketing digital básico</div>
+                <div class="small">6 lecciones • 40 min</div>
+              </div>
+              <button class="btn" onclick="window.location.href='cursos.html'">Ver</button>
+            </div>
+
+            <div class="course">
+              <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=200&q=60" alt="curso">
+              <div class="info">
+                <div style="font-weight:700">Gestión de costos</div>
+                <div class="small">5 lecciones • 30 min</div>
+              </div>
+              <button class="btn" onclick="window.location.href='cursos.html'">Ver</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card" id="finanzas">
+          <h3>Mis finanzas</h3>
+          <div class="small">Registra tus ingresos y gastos para tu proyecto.</div>
+          <div style="margin-top:10px">
+            <label class="small">Saldo actual</label>
+            <div id="saldo" style="font-size:20px;font-weight:800;margin-top:6px">RD$ 0.00</div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn" onclick="agregarIngreso()">Agregar ingreso</button>
+              <button class="btn" onclick="agregarGasto()">Agregar gasto</button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="simulador" style="margin-top:26px">
+        <h2>Simulador rápido</h2>
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+          <input id="simNombre" placeholder="Nombre del producto" style="padding:10px;border-radius:8px;border:1px solid #e6eefc">
+          <input id="simPrecio" placeholder="Precio unitario" type="number" style="padding:10px;border-radius:8px;border:1px solid #e6eefc;width:150px">
+          <input id="simCosto" placeholder="Costo unitario" type="number" style="padding:10px;border-radius:8px;border:1px solid #e6eefc;width:150px">
+          <button class="btn btn-primary" onclick="simularRapido()">Simular</button>
+        </div>
+        <div id="simResultado" class="small" style="margin-top:12px;display:none;padding:10px;background:#e8f1ff;border-left:4px solid #0b63d6;border-radius:6px"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="small">Mockup creado para presentar al MINERD • Diseño simple y accesible para jóvenes</div>
+      <div style="margin-top:8px;">© Aprende y Emprende</div>
+    </footer>
+  </div>
+
+  <!-- Modals -->
+  <div id="modalCourses" class="modal">
+    <div class="window">
+      <h3>Cursos</h3>
+      <p class="small">Listado de cursos disponibles.</p>
+      <ul class="small">
+        <li>Ventas para principiantes</li>
+        <li>Marketing digital básico</li>
+        <li>Gestión de costos</li>
+      </ul>
+      <div style="text-align:right;margin-top:12px"><button class="btn" onclick="closeModal('modalCourses')">Cerrar</button></div>
+    </div>
+  </div>
+
+  <div id="modalSim" class="modal">
+    <div class="window">
+      <h3>Simulador</h3>
+      <p class="small">Simula ventas rápidas y revisa tus ganancias.</p>
+      <div style="text-align:right;margin-top:12px"><button class="btn" onclick="closeModal('modalSim')">Cerrar</button></div>
+    </div>
+  </div>
+
+  <div id="modalCoursePreview" class="modal">
+    <div class="window">
+      <h3>Vista previa del curso</h3>
+      <p class="small">Resumen del curso y botón para iniciar.</p>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+        <button class="btn">Iniciar</button>
+        <button class="btn" onclick="closeModal('modalCoursePreview')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+<script src="Console.JS"></script>
+
+</body>
+</html>
