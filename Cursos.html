@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cursos — Aprende y Emprende</title>
+   <link rel="shortcut icon" href="IN.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="curso.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo">AE</div>
+      <div>
+        <div class="brand-name">Aprende y Emprende</div>
+        <div class="brand-sub">Mis cursos</div>
+      </div>
+    </div>
+
+    <div class="sidebar-title">Cursos disponibles</div>
+
+    <button class="course-btn active" id="sb-0" onclick="loadCourse(0)">
+      <div class="course-icon" style="background:#e8f1ff">🧠</div>
+      <span>Mentalidad Empresarial</span>
+      <span class="done-badge" id="done-sb-0" style="display:none">✓</span>
+    </button>
+    <button class="course-btn" id="sb-1" onclick="loadCourse(1)">
+      <div class="course-icon" style="background:#fff4e8">📱</div>
+      <span>Marketing digital básico</span>
+      <span class="done-badge" id="done-sb-1" style="display:none">✓</span>
+    </button>
+    <button class="course-btn" id="sb-2" onclick="loadCourse(2)">
+      <div class="course-icon" style="background:#e8fff4">📊</div>
+      <span>Gestión de costos</span>
+      <span class="done-badge" id="done-sb-2" style="display:none">✓</span>
+    </button>
+
+    <a class="back-btn" href="Index.html">
+      ← Volver al inicio
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main" id="mainArea">
+    <!-- se renderiza dinámicamente -->
+  </div>
+
+</div>
+
+
+
+
+</body>
+<script src="curso.JS"></script>
+</html>

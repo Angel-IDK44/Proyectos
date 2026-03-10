@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iniciar sesión — Aprende y Emprende</title>
+   <link rel="shortcut icon" href="IN.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="log.css">
+</head>
+<body>
+
+  <div class="login-wrap">
+
+    <div class="brand">
+      <div class="logo">AE</div>
+      <div class="brand-text">
+        <div class="name">Aprende y Emprende</div>
+        <div class="tagline">Capacitación práctica para jóvenes</div>
+      </div>
+    </div>
+
+    <h2>Bienvenido 👋</h2>
+    <p class="subtitle">Accede a tu cuenta para continuar aprendiendo.</p>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="tabLogin" onclick="switchTab('login')">Iniciar sesión</button>
+      <button class="tab" id="tabRegister" onclick="switchTab('register')">Registrarse</button>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Formulario Login -->
+    <div id="formLogin" class="form">
+      <div class="form-group">
+        <label for="loginNombre">Nombre de usuario</label>
+        <input id="loginNombre" type="text" placeholder="Tu nombre" autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="loginPass">Contraseña</label>
+        <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <button class="btn-login" onclick="iniciarSesion()">Entrar →</button>
+    </div>
+
+    <!-- Formulario Registro -->
+    <div id="formRegister" class="form" style="display:none">
+      <div class="form-group">
+        <label for="regNombre">Nombre completo</label>
+        <input id="regNombre" type="text" placeholder="Tu nombre" />
+      </div>
+      <div class="form-group">
+        <label for="regEmail">Correo electrónico</label>
+        <input id="regEmail" type="email" placeholder="tu@correo.com" />
+      </div>
+      <div class="form-group">
+        <label for="regPass">Contraseña</label>
+        <input id="regPass" type="password" placeholder="Mínimo 6 caracteres" />
+      </div>
+      <button class="btn-login orange" onclick="registrarse()">Crear cuenta →</button>
+    </div>
+
+    <footer>Mockup · Aprende y Emprende © 2024</footer>
+  </div>
+
+
+</body>
+<script src="Login_console.JS"></script>
+</html>
